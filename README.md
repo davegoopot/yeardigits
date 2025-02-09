@@ -4,5 +4,5 @@ Each New Year our family has a challenge to create sums for positive integers us
 
 ## Examples
 
-Year: 2021, Example: 1 = 2 - 2 + 0 + 1
-Year: 2022, Example: 1 = (2 * 0) + 2 / 2
+- Year: 2021, Example: 1 = 2 - 2 + 0 + 1
+- Year: 2022, Example: 1 = (2 * 0) + 2 / 2
