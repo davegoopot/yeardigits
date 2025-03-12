@@ -16,6 +16,12 @@ def test_year_10_make_1():
     assert year_calculator.calculate_for(1) == "1 = 1 + 0"
 
 
+def test_year_111_make_3():
+    year_calculator = YearDigits(111)
+
+    assert year_calculator.calculate_for(3) == "3 = 1 + 1 + 1"
+
+
 class YearDigits:
     """For a given year, show how to calulate an integer using all the digits of the year"""
     def __init__(self, year):
