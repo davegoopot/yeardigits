@@ -67,4 +67,4 @@ class YearDigits:
         if YearDigits.is_sum_of_two_digits(target, year_digits):
             return f"{target} = {" + ".join([str(x) for x in year_digits])}"
         else:
-            return "0 = 0 * (2  + 2 + 5)"
+            raise ValueError("Cannot calculate the target value using the digits of the year")
