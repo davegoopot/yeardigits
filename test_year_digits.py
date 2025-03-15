@@ -21,7 +21,7 @@ def test_year_10_make_1():
 def test_2_1_exception():
     year_calculator = YearDigits(2)
     with pytest.raises(ValueError):
-        calculate_for(1)
+        year_calculator.calculate_for(1)
 
 
 class YearDigits:
