@@ -1,3 +1,5 @@
+import pytest
+
 def test_2025_0():
     year_calcaulator = YearDigits(2025)
 
@@ -14,6 +16,12 @@ def test_year_10_make_1():
     year_calculator = YearDigits(10)
 
     assert year_calculator.calculate_for(1) == "1 = 1 + 0"
+
+
+def test_2_1_exception:
+    year_calculator = YearDigits(2)
+    with pytest.raises(ValueException):
+        calculate_for(1)
 
 
 class YearDigits:
