@@ -69,6 +69,14 @@ class YearDigits:
 
         return target == sum(digit_list)
 
+    def attempt_sum_with_first_digit(self):
+        """
+        Take of the first digit in the list and see if can get answer using
+        the first digit plus the remaining digits.
+        """
+        throws NotImplementedError("Implement this code next")
+
+    
     def calculate_for(self, target):
         year_digits = YearDigits.digits_of(self.year)
 
@@ -76,5 +84,7 @@ class YearDigits:
             return f"{target} = {target}"
         if YearDigits.is_sum_of_two_digits(target, year_digits):
             return f"{target} = {" + ".join([str(x) for x in year_digits])}"
+        if len(year_digits) > 2:
+                return self.attempt_sum_with_first_digit()
         else:
             raise ValueError("Cannot calculate the target value using the digits of the year")
