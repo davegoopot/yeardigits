@@ -74,7 +74,7 @@ class YearDigits:
         Take of the first digit in the list and see if can get answer using
         the first digit plus the remaining digits.
         """
-        throws NotImplementedError("Implement this code next")
+        raise NotImplementedError("Implement this code next")
 
     
     def calculate_for(self, target):
