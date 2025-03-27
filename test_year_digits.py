@@ -11,13 +11,13 @@ def test_2025_0():
 def test_year_1():
     year_calculator = YearDigits(1)
 
-    assert year_calculator.calculate_for(1) == "1 = 1"
+    assert year_calculator.calculate_for(1) == "1"
 
 
 def test_year_10_make_1():
     year_calculator = YearDigits(10)
 
-    assert year_calculator.calculate_for(1) == "1 = 1 + 0"
+    assert year_calculator.calculate_for(1) == "(1+0)"
 
 
 
@@ -73,8 +73,8 @@ class YearDigits:
         year_digits = YearDigits.digits_of(self.year)
 
         if YearDigits.is_exact_match(target, year_digits):
-            return f"{target} = {target}"
+            return f"{target}"
         if YearDigits.is_sum_of_two_digits(target, year_digits):
-            return f"{target} = {" + ".join([str(x) for x in year_digits])}"
+            return "(" + "+".join([str(x) for x in year_digits]) + ")"
         else:
-            raise ValueError("Cannot calculate the target value using the digits of the year")
+            raise ValueError("Cannot calculate the target value using the digits of the year.")
