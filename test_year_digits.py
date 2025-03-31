@@ -30,7 +30,12 @@ def test_2_1_exception():
 def test_year_111_make_3():
     year_calculator = YearDigits(111)
 
-    assert year_calculator.calculate_for(3) == "3 = 1 + 1 + 1"
+    assert year_calculator.calculate_for(3) == "(1+(1+1))"
+    
+def test_year_5432_make_14():
+  year_calculator = YearDigits(5432)
+  
+  assert year_calculator.calculate_for(14) == "(5+(4+(3+2)))"
 
 
 
@@ -68,6 +73,14 @@ class YearDigits:
             return False
 
         return target == sum(digit_list)
+        
+        
+    def try_first_digit_addition(self, year_digits, target):
+      first_digit = str(year_digits[0])
+      reduced_target = target - year_digits[0]
+      remaining_year =int("".join([str(x) for x in year_digits[1:]]))
+      return "(" + first_digit + "+" + YearDigits(remaining_year).calculate_for(reduced_target) + ")"
+      
 
     def calculate_for(self, target):
         year_digits = YearDigits.digits_of(self.year)
@@ -76,5 +89,7 @@ class YearDigits:
             return f"{target}"
         if YearDigits.is_sum_of_two_digits(target, year_digits):
             return "(" + "+".join([str(x) for x in year_digits]) + ")"
+        if len(year_digits) > 2:
+          return self.try_first_digit_addition(year_digits, target)
         else:
             raise ValueError("Cannot calculate the target value using the digits of the year.")
