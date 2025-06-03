@@ -68,6 +68,7 @@ class YearDigits:
         return target == digit_list[0]
 
 
+    @staticmethod
     def is_sum_of_two_digits(target, digit_list):
         if len(digit_list) != 2:
             return False
