@@ -1,5 +1,49 @@
 import pytest
-from year_digits import YearDigits
+from year_digits import YearDigits, Operator, ExactMatchOperator, AdditionOperator
+
+
+# Test to validate the operator classes work correctly
+def test_operator_classes_integration():
+    """Test that the new operator class structure produces the same results"""
+    year_calculator = YearDigits(111)
+    
+    # Test that operators can be accessed individually  
+    exact_match_op = ExactMatchOperator()
+    addition_op = AdditionOperator()
+    
+    year_digits = YearDigits.digits_of(111)  # [1, 1, 1]
+    
+    # ExactMatchOperator should return None for multiple digits
+    assert exact_match_op.try_calculate(3, year_digits, YearDigits) is None
+    
+    # AdditionOperator should handle the recursive case
+    result = addition_op.try_calculate(3, year_digits, YearDigits)
+    assert result == "(1+(1+1))"
+
+
+def test_extensibility_demonstration():
+    """Demonstrate that new operators can be easily added"""
+    
+    # Example of how a new operator could be implemented
+    class MultiplicationOperator(Operator):
+        def try_calculate(self, target, year_digits, year_digits_calculator):
+            # Simple example: multiply all digits together
+            if len(year_digits) >= 2:
+                product = 1
+                for digit in year_digits:
+                    product *= digit
+                if product == target:
+                    return "(" + "*".join([str(x) for x in year_digits]) + ")"
+            return None
+    
+    # Test the new operator
+    mult_op = MultiplicationOperator()
+    year_digits = [2, 3]  # 2 * 3 = 6
+    result = mult_op.try_calculate(6, year_digits, YearDigits)
+    assert result == "(2*3)"
+    
+    # Should return None when not applicable
+    assert mult_op.try_calculate(5, year_digits, YearDigits) is None
 
 
 @pytest.mark.skip(reason="Too complex early example")
