@@ -33,6 +33,13 @@ class YearDigits:
             return False
 
         return target == sum(digit_list)
+    
+    @staticmethod
+    def is_difference_of_two_digits(target, digit_list):
+        if len(digit_list) != 2:
+            return False
+
+        return target == abs(digit_list[0] - digit_list[1])
         
         
     def try_first_digit_addition(self, year_digits, target):
@@ -49,6 +56,12 @@ class YearDigits:
             return f"{target}"
         if YearDigits.is_sum_of_two_digits(target, year_digits):
             return "(" + "+".join([str(x) for x in year_digits]) + ")"
+        if YearDigits.is_difference_of_two_digits(target, year_digits):
+            # Return the subtraction in the correct order: larger - smaller
+            if year_digits[0] - year_digits[1] == target:
+                return f"({year_digits[0]}-{year_digits[1]})"
+            else:
+                return f"({year_digits[1]}-{year_digits[0]})"
         if len(year_digits) > 2:
           return self.try_first_digit_addition(year_digits, target)
         else:
