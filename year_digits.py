@@ -5,7 +5,7 @@ class _Operator(ABC):
     """Abstract base class for calculation operators"""
     
     @abstractmethod
-    def try_calculate(self, target, year_digits, year_digits_calculator):
+    def try_calculate(self, target, year_digits):
         """
         Try to calculate the target using this operator.
         Returns the calculation string if successful, None if not applicable.
@@ -16,7 +16,7 @@ class _Operator(ABC):
 class _ExactMatchOperator(_Operator):
     """Operator for exact match when target equals a single digit"""
     
-    def try_calculate(self, target, year_digits, year_digits_calculator):
+    def try_calculate(self, target, year_digits):
         if len(year_digits) != 1:
             return None
         
@@ -29,7 +29,7 @@ class _ExactMatchOperator(_Operator):
 class _AdditionOperator(_Operator):
     """Operator for addition-based calculations"""
     
-    def try_calculate(self, target, year_digits, year_digits_calculator):
+    def try_calculate(self, target, year_digits):
         # Try sum of two digits
         if len(year_digits) == 2 and target == sum(year_digits):
             return "(" + "+".join([str(x) for x in year_digits]) + ")"
@@ -39,7 +39,7 @@ class _AdditionOperator(_Operator):
             first_digit = str(year_digits[0])
             reduced_target = target - year_digits[0]
             remaining_year = int("".join([str(x) for x in year_digits[1:]]))
-            remaining_calculation = year_digits_calculator(remaining_year).calculate_for(reduced_target)
+            remaining_calculation = YearDigits(remaining_year).calculate_for(reduced_target)
             return "(" + first_digit + "+" + remaining_calculation + ")"
         
         return None
@@ -77,7 +77,7 @@ class YearDigits:
         
         # Try each operator in turn
         for operator in operators:
-            result = operator.try_calculate(target, year_digits, YearDigits)
+            result = operator.try_calculate(target, year_digits)
             if result is not None:
                 return result
         
