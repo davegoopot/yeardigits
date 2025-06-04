@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class Operator(ABC):
+class _Operator(ABC):
     """Abstract base class for calculation operators"""
     
     @abstractmethod
@@ -13,7 +13,7 @@ class Operator(ABC):
         pass
 
 
-class ExactMatchOperator(Operator):
+class _ExactMatchOperator(_Operator):
     """Operator for exact match when target equals a single digit"""
     
     def try_calculate(self, target, year_digits, year_digits_calculator):
@@ -26,7 +26,7 @@ class ExactMatchOperator(Operator):
         return None
 
 
-class AdditionOperator(Operator):
+class _AdditionOperator(_Operator):
     """Operator for addition-based calculations"""
     
     def try_calculate(self, target, year_digits, year_digits_calculator):
@@ -71,8 +71,8 @@ class YearDigits:
         
         # List of operators to try in order
         operators = [
-            ExactMatchOperator(),
-            AdditionOperator()
+            _ExactMatchOperator(),
+            _AdditionOperator()
         ]
         
         # Try each operator in turn
