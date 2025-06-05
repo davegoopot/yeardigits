@@ -39,4 +39,22 @@ def test_year_5432_make_14():
   assert year_calculator.calculate_for(14) == "(5+(4+(3+2)))"
 
 
+def test_year_54_make_1():
+    year_calculator = YearDigits(54)
+    
+    assert year_calculator.calculate_for(1) == "(5-4)"
+
+
+def test_year_32_make_1():
+    year_calculator = YearDigits(32)
+    
+    assert year_calculator.calculate_for(1) == "(3-2)"
+
+
+def test_year_522_make_1():
+    year_calculator = YearDigits(522)
+    
+    assert year_calculator.calculate_for(1) == "(5-(2+2))"
+
+
 
