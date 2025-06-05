@@ -48,6 +48,10 @@ class _AdditionOperator(_Operator):
 class _MinusOperator(_Operator):
     """Operator for subtraction-based calculations"""
     
+    def is_difference_of_digits(self, target, year_digits):
+        """Check if target equals the absolute difference of two digits"""
+        return target == abs(year_digits[0] - year_digits[1])
+    
     def _format_two_digit_subtraction(self, target, year_digits):
         """Return the subtraction in the correct order: larger - smaller"""
         if year_digits[0] - year_digits[1] == target:
@@ -65,7 +69,7 @@ class _MinusOperator(_Operator):
     
     def try_calculate(self, target, year_digits):
         # Try difference of two digits
-        if len(year_digits) == 2 and target == abs(year_digits[0] - year_digits[1]):
+        if len(year_digits) == 2 and self.is_difference_of_digits(target, year_digits):
             return self._format_two_digit_subtraction(target, year_digits)
         
         # Try first digit subtraction for more than 2 digits
