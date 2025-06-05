@@ -51,4 +51,10 @@ def test_year_32_make_1():
     assert year_calculator.calculate_for(1) == "(3-2)"
 
 
+def test_year_522_make_1():
+    year_calculator = YearDigits(522)
+    
+    assert year_calculator.calculate_for(1) == "(5-(2+2))"
+
+
 

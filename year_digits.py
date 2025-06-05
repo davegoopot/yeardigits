@@ -57,6 +57,14 @@ class _MinusOperator(_Operator):
             else:
                 return f"({year_digits[1]}-{year_digits[0]})"
         
+        # Try first digit subtraction for more than 2 digits
+        if len(year_digits) > 2:
+            first_digit = str(year_digits[0])
+            reduced_target = year_digits[0] - target
+            remaining_year = int("".join([str(x) for x in year_digits[1:]]))
+            remaining_calculation = YearDigits(remaining_year).calculate_for(reduced_target)
+            return "(" + first_digit + "-" + remaining_calculation + ")"
+        
         return None
 
 
@@ -93,9 +101,13 @@ class YearDigits:
         
         # Try each operator in turn
         for operator in operators:
-            result = operator.try_calculate(target, year_digits)
-            if result is not None:
-                return result
+            try:
+                result = operator.try_calculate(target, year_digits)
+                if result is not None:
+                    return result
+            except ValueError:
+                # This operator failed, try the next one
+                continue
         
         # If no operator worked, raise an error
         raise ValueError("Cannot calculate the target value using the digits of the year.")
