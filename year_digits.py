@@ -48,22 +48,29 @@ class _AdditionOperator(_Operator):
 class _MinusOperator(_Operator):
     """Operator for subtraction-based calculations"""
     
+    def _format_two_digit_subtraction(self, target, year_digits):
+        """Return the subtraction in the correct order: larger - smaller"""
+        if year_digits[0] - year_digits[1] == target:
+            return f"({year_digits[0]}-{year_digits[1]})"
+        else:
+            return f"({year_digits[1]}-{year_digits[0]})"
+    
+    def _calculate_multi_digit_subtraction(self, target, year_digits):
+        """Calculate subtraction for more than 2 digits"""
+        first_digit = str(year_digits[0])
+        reduced_target = year_digits[0] - target
+        remaining_year = int("".join([str(x) for x in year_digits[1:]]))
+        remaining_calculation = YearDigits(remaining_year).calculate_for(reduced_target)
+        return "(" + first_digit + "-" + remaining_calculation + ")"
+    
     def try_calculate(self, target, year_digits):
         # Try difference of two digits
         if len(year_digits) == 2 and target == abs(year_digits[0] - year_digits[1]):
-            # Return the subtraction in the correct order: larger - smaller
-            if year_digits[0] - year_digits[1] == target:
-                return f"({year_digits[0]}-{year_digits[1]})"
-            else:
-                return f"({year_digits[1]}-{year_digits[0]})"
+            return self._format_two_digit_subtraction(target, year_digits)
         
         # Try first digit subtraction for more than 2 digits
         if len(year_digits) > 2:
-            first_digit = str(year_digits[0])
-            reduced_target = year_digits[0] - target
-            remaining_year = int("".join([str(x) for x in year_digits[1:]]))
-            remaining_calculation = YearDigits(remaining_year).calculate_for(reduced_target)
-            return "(" + first_digit + "-" + remaining_calculation + ")"
+            return self._calculate_multi_digit_subtraction(target, year_digits)
         
         return None
 
